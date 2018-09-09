@@ -23,10 +23,20 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QListWidget" name="m_QListWidget_ImportSelection">
+         <widget class="QTreeWidget" name="m_QTreeWidget_ImportSelection">
           <property name="selectionMode">
            <enum>QAbstractItemView::MultiSelection</enum>
           </property>
+          <column>
+           <property name="text">
+            <string>CSV header</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Database column name</string>
+           </property>
+          </column>
          </widget>
         </item>
        </layout>

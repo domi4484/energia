@@ -85,7 +85,7 @@ void CSVImporterDialog::updateGui()
 
 void CSVImporterDialog::updateGui_ImportSelection()
 {
-  ui->m_QListWidget_ImportSelection->clear();
+  ui->m_QTreeWidget_ImportSelection->clear();
 
   foreach (const QString &header, m_QStringList_Header)
   {
@@ -93,9 +93,27 @@ void CSVImporterDialog::updateGui_ImportSelection()
     if(header == m_QStringList_Header.first())
       continue;
 
-    QListWidgetItem *qListWidgetItem = new QListWidgetItem(header,
-                                                           ui->m_QListWidget_ImportSelection);
-    ui->m_QListWidget_ImportSelection->addItem(qListWidgetItem);
+    // Get corresponding import settings
+    CSVImporterSettings::Correspondance correspondance = m_CSVImporterSettings.GetSettingsByCSVHeader(header);
+
+    QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(ui->m_QTreeWidget_ImportSelection);
+    qTreeWidgetItem->setText(0,
+                             header);
+    if(correspondance.m_Valid)
+    {
+//      qTreeWidgetItem->setCheckState(0,
+//                                     correspondance.m_Enabled);
+      qTreeWidgetItem->setText(1,
+                               correspondance.m_DatabaseColumnName);
+    }
+    else
+    {
+//      qTreeWidgetItem->setCheckState(0,
+//                                     false);
+      qTreeWidgetItem->setText(1,
+                               "(not available)");
+    }
+    ui->m_QTreeWidget_ImportSelection->addTopLevelItem(qTreeWidgetItem);
   }
 }
 

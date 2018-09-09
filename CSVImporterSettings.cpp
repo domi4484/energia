@@ -26,14 +26,27 @@ CSVImporterSettings::CSVImporterSettings(QObject *parent)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CSVImporterSettings::loadFromFile(const QString &filename)
+void CSVImporterSettings::LoadFromFile(const QString &filename)
 {
 
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-void CSVImporterSettings::saveToFile(const QString &filename)
+void CSVImporterSettings::SaveToFile(const QString &filename)
 {
 
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+CSVImporterSettings::Correspondance CSVImporterSettings::GetSettingsByCSVHeader(const QString &csvHeader) const
+{
+  foreach (const Correspondance &correspondance, m_QList_Correspondances)
+  {
+    if(correspondance.m_CSVHeader == csvHeader)
+      return correspondance;
+  }
+
+  return Correspondance();
 }

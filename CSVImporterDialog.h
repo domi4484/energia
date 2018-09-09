@@ -1,6 +1,7 @@
 #ifndef CSVIMPORTERDIALOG_H
 #define CSVIMPORTERDIALOG_H
 
+#include "CSVImporterSettings.h"
 
 // Qt includes --------------------------------------------
 #include <QDialog>
@@ -29,6 +30,8 @@ private:
 
   // Link to DatabaseManager
   DatabaseManager *m_DatabaseManager;
+
+  CSVImporterSettings m_CSVImporterSettings;
 
   QString m_CSVFilename;
 
