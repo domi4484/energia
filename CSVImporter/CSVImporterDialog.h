@@ -16,6 +16,16 @@ class CSVImporterDialog : public QDialog
 
 public:
 
+  class _CONST
+  {
+  public:
+    class CSV_HEADER
+    {
+    public:
+      static const QString HEADER_TIME;
+    }; // CSV_HEADER
+  }; // _CONST
+
   explicit CSVImporterDialog(DatabaseManager *databaseManager,
                              QWidget *parent = nullptr);
   ~CSVImporterDialog();
@@ -35,8 +45,14 @@ private:
 
   QString m_CSVFilename;
 
+  // Loaded data
   QStringList m_QStringList_Header;
   QMap<QString, QStringList> m_QMap_Data;
+
+  // Selected data
+  QStringList m_QStringList_HeaderSelected;
+
+  QMap<QString, double> m_QMap_Total_Wh;
 
   void loadCSV();
 
