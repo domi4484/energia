@@ -24,20 +24,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        MainWindow.cpp \
-    CSVImporterDialog.cpp \
+    main.cpp \
+    MainWindow.cpp \
     DatabaseManager.cpp \
     Exception.cpp \
-    CSVImporterSettings.cpp
+    CSVImporter/CSVImporterDialog.cpp \
+    CSVImporter/CSVImporterSettings.cpp
 
 HEADERS += \
-        MainWindow.h \
-    CSVImporterDialog.h \
+    MainWindow.h \
     DatabaseManager.h \
     Exception.h \
-    CSVImporterSettings.h
+    CSVImporter/CSVImporterDialog.h \
+    CSVImporter/CSVImporterSettings.h
 
 FORMS += \
-        MainWindow.ui \
-    CSVImporterDialog.ui
+    MainWindow.ui \
+    CSVImporter/CSVImporterDialog.ui

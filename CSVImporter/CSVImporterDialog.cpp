@@ -99,22 +99,25 @@ void CSVImporterDialog::updateGui_ImportSelection()
     QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(ui->m_QTreeWidget_ImportSelection);
     qTreeWidgetItem->setText(0,
                              header);
+    qTreeWidgetItem->setFlags(qTreeWidgetItem->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsSelectable);
     if(correspondance.m_Valid)
     {
-//      qTreeWidgetItem->setCheckState(0,
-//                                     correspondance.m_Enabled);
+      qTreeWidgetItem->setCheckState(0,
+                                     Qt::Checked);
       qTreeWidgetItem->setText(1,
                                correspondance.m_DatabaseColumnName);
     }
     else
     {
-//      qTreeWidgetItem->setCheckState(0,
-//                                     false);
+      qTreeWidgetItem->setCheckState(0,
+                                     Qt::Unchecked);
       qTreeWidgetItem->setText(1,
                                "(not available)");
     }
     ui->m_QTreeWidget_ImportSelection->addTopLevelItem(qTreeWidgetItem);
   }
+
+  ui->m_QTreeWidget_ImportSelection->resizeColumnToContents(0);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
