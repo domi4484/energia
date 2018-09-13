@@ -4,7 +4,7 @@
 // Project includes
 #include "DatabaseManager.h"
 #include "Exception.h"
-#include "CSVImporterDialog.h"
+#include "CSVImporter/CSVImporterDialog.h"
 
 // Qt includes --------------------------------------------
 #include <QFileDialog>
@@ -43,7 +43,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_m_QAction_File_New_triggered()
 {
+  QString newFilename = QFileDialog::getSaveFileName(this,
+                                                     "New database",
+                                                     QString(),
+                                                     "*.ctb");
+  if(newFilename.isEmpty())
+    return;
 
+  m_DatabaseManager->CreateDatabase(newFilename);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

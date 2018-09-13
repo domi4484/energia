@@ -12,6 +12,8 @@ public:
 
   explicit DatabaseManager(QObject *parent = nullptr);
 
+  void CreateDatabase(const QString &filename);
+
   void Open(const QString &fileName);
   void Close();
 

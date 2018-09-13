@@ -5,6 +5,7 @@
 
 // Qt includes
 #include <QSqlError>
+#include <QSqlQuery>
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -12,6 +13,21 @@ DatabaseManager::DatabaseManager(QObject *parent)
   : QObject(parent)
 {
   m_QSqlDatabase = QSqlDatabase::addDatabase("QSQLITE");
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void DatabaseManager::CreateDatabase(const QString &filename)
+{
+  DatabaseManager::Open(filename);
+
+  // Add Table
+  QSqlQuery qSqlQuery;
+  qSqlQuery.exec("create table energia "
+                 "(Time varchar(30) primary key, "
+                 "firstname varchar(20), "
+                 "lastname varchar(30), "
+                 "age integer)");
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
