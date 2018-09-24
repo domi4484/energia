@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
-    <height>510</height>
+    <width>913</width>
+    <height>660</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,53 +15,52 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,2">
-     <item>
-      <widget class="QGroupBox" name="groupBox">
-       <property name="title">
-        <string>Import selection</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QTreeWidget" name="m_QTreeWidget_ImportSelection">
-          <property name="selectionMode">
-           <enum>QAbstractItemView::MultiSelection</enum>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Import selection</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTreeWidget" name="m_QTreeWidget_ImportSelection">
+         <property name="selectionMode">
+          <enum>QAbstractItemView::MultiSelection</enum>
+         </property>
+         <attribute name="headerShowSortIndicator" stdset="0">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>CSV header</string>
           </property>
-          <attribute name="headerShowSortIndicator" stdset="0">
-           <bool>true</bool>
-          </attribute>
-          <column>
-           <property name="text">
-            <string>CSV header</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Database column name</string>
-           </property>
-          </column>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBox_2">
-       <property name="title">
-        <string>Import data</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="60">
-        <item>
-         <widget class="QTableWidget" name="m_QTableWidget_ImportData">
-          <attribute name="horizontalHeaderVisible">
-           <bool>true</bool>
-          </attribute>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
+         </column>
+         <column>
+          <property name="text">
+           <string>Database column name</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_2">
+      <property name="title">
+       <string>Import data</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="60">
+       <item>
+        <widget class="QTableWidget" name="m_QTableWidget_ImportData">
+         <attribute name="horizontalHeaderVisible">
+          <bool>true</bool>
+         </attribute>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">

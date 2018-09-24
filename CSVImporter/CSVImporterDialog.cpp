@@ -10,6 +10,7 @@
 // Qt includes --------------------------------------------
 #include <QFileDialog>
 #include <QDebug>
+#include <QTimer>
 
 const QString CSVImporterDialog::_CONST::CSV_HEADER::HEADER_TIME ("Time");
 
@@ -48,7 +49,9 @@ void CSVImporterDialog::showEvent(QShowEvent *)
                                                "*.csv");
   if(m_CSVFilename.isEmpty())
   {
-    hide();
+    QTimer::singleShot(0,
+                       this,
+                       SLOT(reject()));
     return;
   }
 
@@ -170,6 +173,7 @@ void CSVImporterDialog::updateGui_ImportData()
     }
   } // for column
 
+  // Show totals
   {
     ui->m_QTableWidget_ImportData->insertRow(ui->m_QTableWidget_ImportData->rowCount());
     ui->m_QTableWidget_ImportData->insertRow(ui->m_QTableWidget_ImportData->rowCount());
@@ -188,9 +192,11 @@ void CSVImporterDialog::updateGui_ImportData()
                                                new QTableWidgetItem(QString::number(m_QMap_Total_Wh.value(m_QStringList_HeaderSelected.at(column)))));
       }
 
-      ui->m_QTableWidget_ImportData->resizeColumnsToContents();
     }
   }
+
+  ui->m_QTableWidget_ImportData->resizeColumnsToContents();
+  ui->m_QTableWidget_ImportData->scrollToBottom();
 }
 
 

@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , m_DatabaseManager(nullptr)
-  , m_CSVImporterDialog(nullptr)
 {
   ui->setupUi(this);
 
@@ -28,12 +27,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-  if (m_CSVImporterDialog != nullptr)
-  {
-    if(m_CSVImporterDialog->isVisible())
-        m_CSVImporterDialog->reject();
-    delete m_CSVImporterDialog;
-  }
   delete m_DatabaseManager;
 
   delete ui;
@@ -85,9 +78,7 @@ void MainWindow::on_m_QAction_File_Open_triggered()
 
 void MainWindow::on_m_QAction_File_Import_triggered()
 {
-  if (m_CSVImporterDialog == nullptr)
-    m_CSVImporterDialog = new CSVImporterDialog(m_DatabaseManager,
-                                                this);
-
-  m_CSVImporterDialog->show();
+  CSVImporterDialog cSVImporterDialog(m_DatabaseManager,
+                                      this);
+  cSVImporterDialog.exec();
 }

@@ -7,7 +7,6 @@
 // Class forward declarations -----------------------------
 namespace Ui { class MainWindow; }
 class DatabaseManager;
-class CSVImporterDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -28,8 +27,6 @@ private:
   Ui::MainWindow *ui;
 
   DatabaseManager *m_DatabaseManager;
-
-  CSVImporterDialog *m_CSVImporterDialog;
 
 };
 
