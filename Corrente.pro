@@ -26,17 +26,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    DatabaseManager.cpp \
     Exception.cpp \
+    Database/DatabaseManager.cpp \
     CSVImporter/CSVImporterDialog.cpp \
-    CSVImporter/CSVImporterSettings.cpp
+    CSVImporter/CSVImporterSettings.cpp \
+    Database/DatabaseTableEnergia.cpp
 
 HEADERS += \
     MainWindow.h \
-    DatabaseManager.h \
     Exception.h \
+    Database/DatabaseManager.h \
     CSVImporter/CSVImporterDialog.h \
-    CSVImporter/CSVImporterSettings.h
+    CSVImporter/CSVImporterSettings.h \
+    Database/DatabaseTableEnergia.h
 
 FORMS += \
     MainWindow.ui \

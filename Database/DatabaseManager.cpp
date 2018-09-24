@@ -1,9 +1,13 @@
+
+// File includes ------------------------------------------
 #include "DatabaseManager.h"
 
-// Project includes
+// Project includes ---------------------------------------
+#include "DatabaseTableEnergia.h"
 #include "Exception.h"
 
-// Qt includes
+// Qt includes --------------------------------------------
+#include <QString>
 #include <QSqlError>
 #include <QSqlQuery>
 
@@ -21,13 +25,16 @@ void DatabaseManager::CreateDatabase(const QString &filename)
 {
   DatabaseManager::Open(filename);
 
+  // Prepare add table query
+  QString tableName = DatabaseTableEnergia::_CONST::DATABASE_TABLE::TABLE_NAME;
+  QStringList qStringList_Columns;
+  qStringList_Columns << QString("%1 varchar(30) primary key").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L1);
+
   // Add Table
   QSqlQuery qSqlQuery;
-  qSqlQuery.exec("create table energia "
-                 "(Time varchar(30) primary key, "
-                 "firstname varchar(20), "
-                 "lastname varchar(30), "
-                 "age integer)");
+  qSqlQuery.exec(QString("CREATE TABLE %1 ( %2 );").arg(tableName)
+                                                   .arg(qStringList_Columns.join(", ")));
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

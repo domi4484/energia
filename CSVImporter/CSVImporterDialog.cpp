@@ -4,8 +4,8 @@
 #include "ui_CSVImporterDialog.h"
 
 // Project includes
-#include "DatabaseManager.h"
 #include "Exception.h"
+#include "Database/DatabaseManager.h"
 
 // Qt includes --------------------------------------------
 #include <QFileDialog>
