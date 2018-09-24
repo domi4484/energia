@@ -30,6 +30,26 @@ void DatabaseManager::CreateDatabase(const QString &filename)
   QStringList qStringList_Columns;
   qStringList_Columns << QString("%1 varchar(30) primary key").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP);
   qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L3);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO1_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO1_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO1_L3);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO2_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO2_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO2_L3);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO3_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO3_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO3_L3);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO1_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO1_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO1_L3);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO2_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO2_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO2_L3);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L1);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L2);
+  qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L3);
 
   // Add Table
   QSqlQuery qSqlQuery;
