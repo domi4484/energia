@@ -139,7 +139,7 @@ void CSVImporterDialog::updateGui_ImportSelection()
 void CSVImporterDialog::updateGui_ImportData()
 {
   ui->m_QTableWidget_ImportData->clear();
-  m_QMap_Total_Wh.clear();
+  m_QMap_Total_kWh.clear();
 
   // Set header
   ui->m_QTableWidget_ImportData->setColumnCount(m_QStringList_HeaderSelected.size());
@@ -168,37 +168,48 @@ void CSVImporterDialog::updateGui_ImportData()
     } // for row
     if(m_QStringList_HeaderSelected.at(column) != _CONST::CSV_HEADER::HEADER_TIME)
     {
-      m_QMap_Total_Wh.insert(m_QStringList_HeaderSelected.at(column),
+      m_QMap_Total_kWh.insert(m_QStringList_HeaderSelected.at(column),
                          totalWh);
     }
   } // for column
 
-  // Show totals
-  {
-    ui->m_QTableWidget_ImportData->insertRow(ui->m_QTableWidget_ImportData->rowCount());
-    ui->m_QTableWidget_ImportData->insertRow(ui->m_QTableWidget_ImportData->rowCount());
-    for (int column = 0; column < m_QStringList_HeaderSelected.size(); column++)
-    {
-      if(m_QStringList_HeaderSelected.at(column) == _CONST::CSV_HEADER::HEADER_TIME)
-      {
-        ui->m_QTableWidget_ImportData->setItem(ui->m_QTableWidget_ImportData->rowCount()-1,
-                                               column,
-                                               new QTableWidgetItem("Total [Wh]"));
-      }
-      else
-      {
-        ui->m_QTableWidget_ImportData->setItem(ui->m_QTableWidget_ImportData->rowCount()-1,
-                                               column,
-                                               new QTableWidgetItem(QString::number(m_QMap_Total_Wh.value(m_QStringList_HeaderSelected.at(column)))));
-      }
-
-    }
-  }
-
   ui->m_QTableWidget_ImportData->resizeColumnsToContents();
   ui->m_QTableWidget_ImportData->scrollToBottom();
+
+  updateGui_ImportData_Totals();
 }
 
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void CSVImporterDialog::updateGui_ImportData_Totals()
+{
+  // Set header
+  QStringList qStringList_Header(m_QStringList_HeaderSelected);
+  qStringList_Header.removeFirst();
+  ui->m_QTableWidget_ImportData_Totals->setColumnCount(qStringList_Header.size());
+  ui->m_QTableWidget_ImportData_Totals->setHorizontalHeaderLabels(qStringList_Header);
+
+  ui->m_QTableWidget_ImportData_Totals->insertRow(ui->m_QTableWidget_ImportData_Totals->rowCount());
+  for (int column = 0; column < m_QStringList_HeaderSelected.size(); column++)
+  {
+    if(m_QStringList_HeaderSelected.at(column) == _CONST::CSV_HEADER::HEADER_TIME)
+      continue;
+
+    ui->m_QTableWidget_ImportData_Totals->setItem(ui->m_QTableWidget_ImportData_Totals->rowCount()-1,
+                                                  column-1,
+                                                  new QTableWidgetItem(QString::number(m_QMap_Total_kWh.value(m_QStringList_HeaderSelected.at(column)))));
+  }
+
+  ui->m_QTableWidget_ImportData_Totals->resizeColumnsToContents();
+  ui->m_QTableWidget_ImportData_Totals->scrollToBottom();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void CSVImporterDialog::on_m_QDialogButtonBox_accepted()
+{
 
 
 
+//  m_DatabaseManager->GetTableEnergia->InsertRow();
+}

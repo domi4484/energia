@@ -32,7 +32,11 @@ public:
 
 protected:
 
-    virtual void showEvent(QShowEvent *);
+  virtual void showEvent(QShowEvent *);
+
+private slots:
+
+  void on_m_QDialogButtonBox_accepted();
 
 private:
 
@@ -52,13 +56,14 @@ private:
   // Selected data
   QStringList m_QStringList_HeaderSelected;
 
-  QMap<QString, double> m_QMap_Total_Wh;
+  QMap<QString, double> m_QMap_Total_kWh;
 
   void loadCSV();
 
   void updateGui();
   void updateGui_ImportSelection();
   void updateGui_ImportData();
+  void updateGui_ImportData_Totals();
 
 };
 

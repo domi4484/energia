@@ -50,7 +50,7 @@
       <property name="title">
        <string>Import data</string>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout" stretch="60">
+      <layout class="QVBoxLayout" name="verticalLayout" stretch="60,1">
        <item>
         <widget class="QTableWidget" name="m_QTableWidget_ImportData">
          <attribute name="horizontalHeaderVisible">
@@ -58,12 +58,15 @@
          </attribute>
         </widget>
        </item>
+       <item>
+        <widget class="QTableWidget" name="m_QTableWidget_ImportData_Totals"/>
+       </item>
       </layout>
      </widget>
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="m_QDialogButtonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -77,23 +80,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>CSVImporterDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
+   <sender>m_QDialogButtonBox</sender>
    <signal>rejected()</signal>
    <receiver>CSVImporterDialog</receiver>
    <slot>reject()</slot>

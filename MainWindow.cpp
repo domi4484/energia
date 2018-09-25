@@ -80,5 +80,6 @@ void MainWindow::on_m_QAction_File_Import_triggered()
 {
   CSVImporterDialog cSVImporterDialog(m_DatabaseManager,
                                       this);
+
   cSVImporterDialog.exec();
 }
