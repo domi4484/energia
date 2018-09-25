@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QSqlDatabase>
 
+class DatabaseTableEnergia;
+
 class DatabaseManager : public QObject
 {
   Q_OBJECT
@@ -13,17 +15,20 @@ class DatabaseManager : public QObject
 public:
 
   explicit DatabaseManager(QObject *parent = nullptr);
+  virtual ~DatabaseManager();
 
   void CreateDatabase(const QString &filename);
 
   void Open(const QString &fileName);
   void Close();
 
-  void AddMeasurement();
+  DatabaseTableEnergia *GetTableEnergia();
 
 private:
 
   QSqlDatabase m_QSqlDatabase;
+
+  DatabaseTableEnergia *m_DatabaseTableEnergia;
 
 };
 

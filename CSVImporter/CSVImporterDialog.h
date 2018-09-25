@@ -51,7 +51,7 @@ private:
 
   // Loaded data
   QStringList m_QStringList_Header;
-  QMap<QString, QStringList> m_QMap_Data;
+  QList<QStringList> m_QList_Data;
 
   // Selected data
   QStringList m_QStringList_HeaderSelected;

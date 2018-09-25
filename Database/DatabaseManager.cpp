@@ -15,8 +15,19 @@
 
 DatabaseManager::DatabaseManager(QObject *parent)
   : QObject(parent)
+  , m_DatabaseTableEnergia(nullptr)
 {
   m_QSqlDatabase = QSqlDatabase::addDatabase("QSQLITE");
+
+  m_DatabaseTableEnergia = new DatabaseTableEnergia(&m_QSqlDatabase,
+                                                    this);
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+DatabaseManager::~DatabaseManager()
+{
+  delete m_DatabaseTableEnergia;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
@@ -75,4 +86,11 @@ void DatabaseManager::Open(const QString &fileName)
 void DatabaseManager::Close()
 {
   m_QSqlDatabase.close();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+DatabaseTableEnergia *DatabaseManager::GetTableEnergia()
+{
+  return m_DatabaseTableEnergia;
 }

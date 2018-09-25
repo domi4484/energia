@@ -3,6 +3,11 @@
 // File includes ------------------------------------------
 #include "DatabaseTableEnergia.h"
 
+#include <QSqlQuery>
+#include <QVariantMap>
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 const QString DatabaseTableEnergia::_CONST::DATABASE_TABLE::TABLE_NAME("energia");
 
 const QString DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP("timestamp");
@@ -28,8 +33,30 @@ const QString DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_A
 const QString DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L2("casa17_appartamento3_l2");
 const QString DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L3("casa17_appartamento3_l3");
 
-DatabaseTableEnergia::DatabaseTableEnergia(QObject *parent)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+DatabaseTableEnergia::DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
+                                           QObject *parent)
   : QObject(parent)
+  , m_QSqlDatabase(qSqlDatabase)
 {
 
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void DatabaseTableEnergia::InsertRow(const QVariantMap &qVariantMap_Row)
+{
+  QSqlQuery qSqlQuery(*m_QSqlDatabase);
+  qSqlQuery.prepare(QString("INSERT INTO %1 (%2) "
+                            "VALUES (:%3)").arg(_CONST::DATABASE_TABLE::TABLE_NAME)
+                                           .arg(qVariantMap_Row.keys().join(", "))
+                                           .arg(qVariantMap_Row.keys().join(", :")));
+
+  foreach (const QString &key, qVariantMap_Row.keys())
+  {
+    qSqlQuery.bindValue(QString(":%1").arg(key),
+                        qVariantMap_Row.value(key));
+  }
+  qSqlQuery.exec();
 }

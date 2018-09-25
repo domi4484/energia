@@ -4,6 +4,8 @@
 // Qt includes --------------------------------------------
 #include <QObject>
 
+class QSqlDatabase;
+
 class DatabaseTableEnergia : public QObject
 {
   Q_OBJECT
@@ -45,8 +47,15 @@ public:
     }; // DATABASE_TABLE
   }; // _CONST
 
-  DatabaseTableEnergia(QObject *parent = nullptr);
+  DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
+                       QObject *parent = nullptr);
 
+  void InsertRow(const QVariantMap &qVariantMap_Row);
+
+private:
+
+  // Link to database
+  QSqlDatabase *m_QSqlDatabase;
 };
 
 #endif // DATABASETABLE_ENERGIA_H
