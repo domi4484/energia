@@ -13,6 +13,10 @@
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+const QString DatabaseManager::_CONST::TIMESTAMP_FORMAT ("yyyy-MM-dd hh:mm:ss");
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 DatabaseManager::DatabaseManager(QObject *parent)
   : QObject(parent)
   , m_DatabaseTableEnergia(nullptr)
@@ -39,7 +43,7 @@ void DatabaseManager::CreateDatabase(const QString &filename)
   // Prepare add table query
   QString tableName = DatabaseTableEnergia::_CONST::DATABASE_TABLE::TABLE_NAME;
   QStringList qStringList_Columns;
-  qStringList_Columns << QString("%1 varchar(30) primary key").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP);
+  qStringList_Columns << QString("%1 varchar(19) primary key").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP);
   qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L1);
   qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L2);
   qStringList_Columns << QString("%1 REAL DEFAULT 0.0").arg(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L3);

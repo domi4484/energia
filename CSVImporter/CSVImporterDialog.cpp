@@ -11,9 +11,12 @@
 // Qt includes --------------------------------------------
 #include <QFileDialog>
 #include <QDebug>
+#include <QDateTime>
 #include <QTimer>
 #include <QSqlQuery>
 #include <QVariantMap>
+
+const QString CSVImporterDialog::_CONST::CSV_TIMESTAMP_FORMAT ("dd/MM/yyyy hh:mm:ss");
 
 const QString CSVImporterDialog::_CONST::CSV_HEADER::HEADER_TIME ("Time");
 
@@ -79,6 +82,11 @@ void CSVImporterDialog::loadCSV()
   while (qFile.atEnd() == false)
   {
     QStringList qStringlist_Data = QString(qFile.readLine()).split(',');
+
+    QDateTime qDateTime_Timestamp = QDateTime::fromString(qStringlist_Data.takeFirst(),
+                                                          _CONST::CSV_TIMESTAMP_FORMAT);
+    qStringlist_Data.prepend(qDateTime_Timestamp.toString(DatabaseManager::_CONST::TIMESTAMP_FORMAT));
+
     m_QList_Data.append(qStringlist_Data);
 
     for (int i = 1; i < qStringlist_Data.size(); i++)

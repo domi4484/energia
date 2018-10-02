@@ -19,6 +19,9 @@ public:
   class _CONST
   {
   public:
+
+    static const QString CSV_TIMESTAMP_FORMAT;
+
     class CSV_HEADER
     {
     public:

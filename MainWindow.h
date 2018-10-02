@@ -22,11 +22,16 @@ private slots:
   void on_m_QAction_File_Open_triggered();
   void on_m_QAction_File_Import_triggered();
 
+  void on_m_QCalendarWidget_From_clicked(const QDate &date);
+  void on_m_QCalendarWidget_To_clicked(const QDate &date);
+
 private:
 
   Ui::MainWindow *ui;
 
   DatabaseManager *m_DatabaseManager;
+
+  void updateGui();
 
 };
 

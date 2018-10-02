@@ -45,12 +45,16 @@ public:
       static const QString COLUMN_NAME_CASA17_APPARTAMENTO3_L3;
 
     }; // DATABASE_TABLE
+
   }; // _CONST
 
   DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
                        QObject *parent = nullptr);
 
   void InsertRow(const QVariantMap &qVariantMap_Row);
+
+//  select * from energia where `timestamp` >= '2018-09-02' and `timestamp` <= '2018-09-03'
+
 
 private:
 

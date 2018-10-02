@@ -14,6 +14,12 @@ class DatabaseManager : public QObject
 
 public:
 
+  class _CONST
+  {
+  public:
+    static const QString TIMESTAMP_FORMAT;
+  }; // _CONST
+
   explicit DatabaseManager(QObject *parent = nullptr);
   virtual ~DatabaseManager();
 

@@ -5,6 +5,7 @@
 #include "Exception.h"
 #include "CSVImporter/CSVImporterDialog.h"
 #include "Database/DatabaseManager.h"
+#include "Database/DatabaseTableEnergia.h"
 
 // Qt includes --------------------------------------------
 #include <QFileDialog>
@@ -19,6 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
   , m_DatabaseManager(nullptr)
 {
   ui->setupUi(this);
+
+  ui->m_QSplitter->setStretchFactor(0,1);
+  ui->m_QSplitter->setStretchFactor(1,6);
 
   m_DatabaseManager = new DatabaseManager(this);
 }
@@ -83,3 +87,39 @@ void MainWindow::on_m_QAction_File_Import_triggered()
 
   cSVImporterDialog.exec();
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------
+void MainWindow::on_m_QCalendarWidget_From_clicked(const QDate &date)
+{
+  Q_UNUSED(date);
+
+  updateGui();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::on_m_QCalendarWidget_To_clicked(const QDate &date)
+{
+  Q_UNUSED(date);
+
+  updateGui();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::updateGui()
+{
+  QDate qDate_From = ui->m_QCalendarWidget_From->selectedDate();
+  QDate qDate_To   = ui->m_QCalendarWidget_To->selectedDate();
+
+  if(qDate_From > qDate_To)
+  {
+    qWarning() << QString("Date From (%1) > Date To (%2)").arg(qDate_From.toString())
+                                                          .arg(qDate_To.toString());
+    return;
+  }
+
+//  m_DatabaseManager->GetTableEnergia()->GetRows
+}
+
+
