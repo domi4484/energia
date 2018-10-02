@@ -221,6 +221,7 @@ void CSVImporterDialog::updateGui_ImportData_Totals()
 
 void CSVImporterDialog::on_m_QDialogButtonBox_accepted()
 {
+  m_DatabaseManager->TransactionBegin();
   foreach (const QStringList &dataRow, m_QList_Data)
   {
     QVariantMap qVariantMap_Row;
@@ -237,6 +238,7 @@ void CSVImporterDialog::on_m_QDialogButtonBox_accepted()
 
     m_DatabaseManager->GetTableEnergia()->InsertRow(qVariantMap_Row);
   } // foreach row
+  m_DatabaseManager->TransactionCommit();
 
   QDialog::accept();
 }

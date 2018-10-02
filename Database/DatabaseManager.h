@@ -28,6 +28,10 @@ public:
   void Open(const QString &fileName);
   void Close();
 
+  void TransactionBegin();
+  void TransactionCommit();
+  void TransactionRollback();
+
   DatabaseTableEnergia *GetTableEnergia();
 
 private:

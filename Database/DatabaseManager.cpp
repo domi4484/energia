@@ -94,6 +94,27 @@ void DatabaseManager::Close()
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+void DatabaseManager::TransactionBegin()
+{
+  m_QSqlDatabase.transaction();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void DatabaseManager::TransactionCommit()
+{
+  m_QSqlDatabase.commit();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+void DatabaseManager::TransactionRollback()
+{
+  m_QSqlDatabase.rollback();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 DatabaseTableEnergia *DatabaseManager::GetTableEnergia()
 {
   return m_DatabaseTableEnergia;
