@@ -89,7 +89,14 @@ void DatabaseManager::Open(const QString &fileName)
 
 void DatabaseManager::Close()
 {
-  m_QSqlDatabase.close();
+    m_QSqlDatabase.close();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QString DatabaseManager::GetFilename() const
+{
+  return m_QSqlDatabase.databaseName();
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

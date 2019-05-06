@@ -24,6 +24,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    DocumentProperties/DocumentPropertiesDialog.cpp \
+    Settings/Settings.cpp \
     main.cpp \
     MainWindow.cpp \
     Exception.cpp \
@@ -33,13 +35,16 @@ SOURCES += \
     Database/DatabaseTableEnergia.cpp
 
 HEADERS += \
+    DocumentProperties/DocumentPropertiesDialog.h \
     MainWindow.h \
     Exception.h \
     Database/DatabaseManager.h \
     CSVImporter/CSVImporterDialog.h \
     CSVImporter/CSVImporterSettings.h \
-    Database/DatabaseTableEnergia.h
+    Database/DatabaseTableEnergia.h \
+    Settings/Settings.h
 
 FORMS += \
+    DocumentProperties/DocumentPropertiesDialog.ui \
     MainWindow.ui \
     CSVImporter/CSVImporterDialog.ui

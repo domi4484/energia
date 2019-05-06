@@ -28,6 +28,8 @@ public:
   void Open(const QString &fileName);
   void Close();
 
+  QString GetFilename() const;
+
   void TransactionBegin();
   void TransactionCommit();
   void TransactionRollback();
