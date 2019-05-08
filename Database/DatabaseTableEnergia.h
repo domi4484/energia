@@ -51,6 +51,8 @@ public:
   DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
                        QObject *parent = nullptr);
 
+  int GetRowCount() const;
+
   void InsertRow(const QVariantMap &qVariantMap_Row);
 
 //  select * from energia where `timestamp` >= '2018-09-02' and `timestamp` <= '2018-09-03'

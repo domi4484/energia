@@ -45,6 +45,16 @@ DatabaseTableEnergia::DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+int DatabaseTableEnergia::GetRowCount() const
+{
+  QSqlQuery qSqlQuery(QString("SELECT COUNT(*) FROM %1").arg(_CONST::DATABASE_TABLE::TABLE_NAME));
+
+  qSqlQuery.first();
+  return qSqlQuery.value(0).toInt();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 void DatabaseTableEnergia::InsertRow(const QVariantMap &qVariantMap_Row)
 {
   QSqlQuery qSqlQuery(*m_QSqlDatabase);

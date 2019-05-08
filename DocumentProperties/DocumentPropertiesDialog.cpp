@@ -5,6 +5,7 @@
 
 // Project includes ---------------------------------------
 #include "../Database/DatabaseManager.h"
+#include "../Database/DatabaseTableEnergia.h"
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -46,5 +47,5 @@ void DocumentPropertiesDialog::setupGui_File()
 
 void DocumentPropertiesDialog::setupGui_Content()
 {
-//    ui->m_QLabel_Content_TotalDatabaseRows->setText(m_DatabaseManager->GetTableEnergia());
+  ui->m_QLabel_Content_TotalDatabaseRows->setText(QString::number(m_DatabaseManager->GetTableEnergia()->GetRowCount()));
 }
