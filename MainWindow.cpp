@@ -73,9 +73,12 @@ void MainWindow::on_m_QAction_File_New_triggered()
   QString newFilename = QFileDialog::getSaveFileName(this,
                                                      "New database",
                                                      QString(),
-                                                     "*.ctb");
+                                                     QString("*%1").arg(DatabaseManager::_CONST::DATABASE_FILENAME_EXTENSION));
   if(newFilename.isEmpty())
     return;
+
+  if(newFilename.endsWith(DatabaseManager::_CONST::DATABASE_FILENAME_EXTENSION) == false)
+    newFilename.append(DatabaseManager::_CONST::DATABASE_FILENAME_EXTENSION);
 
   // Create new database
   m_DatabaseManager->CreateDatabase(newFilename);
@@ -172,7 +175,21 @@ void MainWindow::updateGui()
     return;
   }
 
-  //  m_DatabaseManager->GetTableEnergia()->GetRows
+  QList<QVariantMap> qList_QVariantMap_Rows;
+  try
+  {
+    qList_QVariantMap_Rows = m_DatabaseManager->GetTableEnergia()->GetRows(qDate_From,
+                                                                           qDate_To);
+  }
+  catch(const Exception &exception)
+  {
+    QMessageBox::critical(this,
+                          "Can't open database",
+                          exception.GetText());
+  }
+
+  qDebug() << "qList_QVariantMap_Rows.size();" << qList_QVariantMap_Rows.size();
+//  m_DatabaseManager->GetTableEnergia()->GetRows
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

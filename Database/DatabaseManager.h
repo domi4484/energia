@@ -17,6 +17,8 @@ public:
   class _CONST
   {
   public:
+    static const QString DATABASE_FILENAME_EXTENSION;
+
     static const QString TIMESTAMP_FORMAT;
   }; // _CONST
 

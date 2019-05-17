@@ -44,6 +44,8 @@ public:
       static const QString COLUMN_NAME_CASA17_APPARTAMENTO3_L2;
       static const QString COLUMN_NAME_CASA17_APPARTAMENTO3_L3;
 
+      static const QStringList ALL_COLUMNS;
+
     }; // DATABASE_TABLE
 
   }; // _CONST
@@ -55,8 +57,8 @@ public:
 
   void InsertRow(const QVariantMap &qVariantMap_Row);
 
-//  select * from energia where `timestamp` >= '2018-09-02' and `timestamp` <= '2018-09-03'
-
+  QList<QVariantMap> GetRows(const QDate &qDate_From,
+                      const QDate &qDate_To);
 
 private:
 

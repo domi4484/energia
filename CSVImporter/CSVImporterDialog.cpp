@@ -15,6 +15,7 @@
 #include <QTimer>
 #include <QSqlQuery>
 #include <QVariantMap>
+#include <QMessageBox>
 
 const QString CSVImporterDialog::_CONST::CSV_TIMESTAMP_FORMAT ("dd/MM/yyyy hh:mm:ss");
 
@@ -79,6 +80,7 @@ void CSVImporterDialog::loadCSV()
 
   m_QStringList_Header = QString(qFile.readLine()).split(',');
 
+  int missingDataCount = 0;
   while (qFile.atEnd() == false)
   {
     QStringList qStringlist_Data = QString(qFile.readLine()).split(',');
@@ -87,9 +89,16 @@ void CSVImporterDialog::loadCSV()
                                                           _CONST::CSV_TIMESTAMP_FORMAT);
     qStringlist_Data.prepend(qDateTime_Timestamp.toString(DatabaseManager::_CONST::TIMESTAMP_FORMAT));
 
+    if(qStringlist_Data.size() < m_QStringList_Header.size())
+    {
+      missingDataCount++;
+      while (qStringlist_Data.size() < m_QStringList_Header.size())
+        qStringlist_Data.append("0.0");
+    }
+
     m_QList_Data.append(qStringlist_Data);
 
-    for (int i = 1; i < qStringlist_Data.size(); i++)
+    for (int i = 1; i < m_QStringList_Header.size(); i++)
     {
       double currentValueKWh = m_QMap_Total_kWh.value(m_QStringList_Header.at(i),
                                                       0.0);
@@ -98,6 +107,12 @@ void CSVImporterDialog::loadCSV()
                               currentValueKWh);
     } // foreach
   } // while
+
+  if(missingDataCount > 0)
+    QMessageBox::warning(this,
+                         "Missing data",
+                         QString("Missing partial data from %1 lines in CSV file.").arg(missingDataCount));
+
   updateGui();
 }
 
