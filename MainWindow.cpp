@@ -165,9 +165,9 @@ void MainWindow::on_m_QCalendarWidget_To_clicked(const QDate &date)
 
 void MainWindow::updateGui()
 {
+  // Get selected time span
   QDate qDate_From = ui->m_QCalendarWidget_From->selectedDate();
   QDate qDate_To   = ui->m_QCalendarWidget_To->selectedDate();
-
   if(qDate_From > qDate_To)
   {
     qWarning() << QString("Date From (%1) > Date To (%2)").arg(qDate_From.toString())
@@ -175,6 +175,7 @@ void MainWindow::updateGui()
     return;
   }
 
+  // Get energy data
   QList<QVariantMap> qList_QVariantMap_Rows;
   try
   {
@@ -186,9 +187,11 @@ void MainWindow::updateGui()
     QMessageBox::critical(this,
                           "Can't open database",
                           exception.GetText());
+    return;
   }
 
-  qDebug() << "qList_QVariantMap_Rows.size();" << qList_QVariantMap_Rows.size();
+  // Compute energy
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------
