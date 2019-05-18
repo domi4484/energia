@@ -189,7 +189,6 @@ void MainWindow::updateGui()
   }
 
   qDebug() << "qList_QVariantMap_Rows.size();" << qList_QVariantMap_Rows.size();
-//  m_DatabaseManager->GetTableEnergia()->GetRows
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

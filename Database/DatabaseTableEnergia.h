@@ -53,12 +53,14 @@ public:
   DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
                        QObject *parent = nullptr);
 
-  int GetRowCount() const;
 
   void InsertRow(const QVariantMap &qVariantMap_Row);
 
+  int GetRowCount() const;
   QList<QVariantMap> GetRows(const QDate &qDate_From,
-                      const QDate &qDate_To);
+                             const QDate &qDate_To) const;
+  QVariantMap GetOldestRow() const;
+  QVariantMap GetNewestRow() const;
 
 private:
 

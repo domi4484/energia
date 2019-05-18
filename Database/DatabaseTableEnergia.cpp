@@ -76,16 +76,6 @@ DatabaseTableEnergia::DatabaseTableEnergia(QSqlDatabase *qSqlDatabase,
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
-int DatabaseTableEnergia::GetRowCount() const
-{
-  QSqlQuery qSqlQuery(QString("SELECT COUNT(*) FROM %1").arg(_CONST::DATABASE_TABLE::TABLE_NAME));
-
-  qSqlQuery.first();
-  return qSqlQuery.value(0).toInt();
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------
-
 void DatabaseTableEnergia::InsertRow(const QVariantMap &qVariantMap_Row)
 {
   QSqlQuery qSqlQuery(*m_QSqlDatabase);
@@ -104,8 +94,18 @@ void DatabaseTableEnergia::InsertRow(const QVariantMap &qVariantMap_Row)
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
+int DatabaseTableEnergia::GetRowCount() const
+{
+  QSqlQuery qSqlQuery(QString("SELECT COUNT(*) FROM %1").arg(_CONST::DATABASE_TABLE::TABLE_NAME));
+
+  qSqlQuery.first();
+  return qSqlQuery.value(0).toInt();
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
 QList<QVariantMap> DatabaseTableEnergia::GetRows(const QDate &qDate_From,
-                                                 const QDate &qDate_To)
+                                                 const QDate &qDate_To) const
 {
   //  select * from energia where `timestamp` >= '2018-09-02' and `timestamp` <= '2018-09-03'
 
@@ -134,4 +134,56 @@ QList<QVariantMap> DatabaseTableEnergia::GetRows(const QDate &qDate_From,
   }
 
   return qList_QVariantMap_Rows;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QVariantMap DatabaseTableEnergia::GetOldestRow() const
+{
+  QSqlQuery qSqlQuery(*m_QSqlDatabase);
+  qSqlQuery.setForwardOnly(true);
+  qSqlQuery.prepare(QString("SELECT %1 FROM %2 "
+                            "ORDER BY %3 ASC "
+                            "LIMIT 1").arg(_CONST::DATABASE_TABLE::ALL_COLUMNS.join(", "))
+                                      .arg(_CONST::DATABASE_TABLE::TABLE_NAME)
+                                      .arg(_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP));
+  if(qSqlQuery.exec() == false)
+    throw Exception(QString("Can't get database rows; %1").arg(qSqlQuery.lastError().text()));
+
+  qSqlQuery.first();
+
+  QVariantMap qVariantMap_Row;
+  for (int i=0; i < _CONST::DATABASE_TABLE::ALL_COLUMNS.size(); i++)
+  {
+    qVariantMap_Row.insert(_CONST::DATABASE_TABLE::ALL_COLUMNS.at(i),
+                           qSqlQuery.value(i));
+  }
+
+  return qVariantMap_Row;
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------
+
+QVariantMap DatabaseTableEnergia::GetNewestRow() const
+{
+  QSqlQuery qSqlQuery(*m_QSqlDatabase);
+  qSqlQuery.setForwardOnly(true);
+  qSqlQuery.prepare(QString("SELECT %1 FROM %2 "
+                            "ORDER BY %3 DESC "
+                            "LIMIT 1").arg(_CONST::DATABASE_TABLE::ALL_COLUMNS.join(", "))
+                                      .arg(_CONST::DATABASE_TABLE::TABLE_NAME)
+                                      .arg(_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP));
+  if(qSqlQuery.exec() == false)
+    throw Exception(QString("Can't get database rows; %1").arg(qSqlQuery.lastError().text()));
+
+  qSqlQuery.first();
+
+  QVariantMap qVariantMap_Row;
+  for (int i=0; i < _CONST::DATABASE_TABLE::ALL_COLUMNS.size(); i++)
+  {
+    qVariantMap_Row.insert(_CONST::DATABASE_TABLE::ALL_COLUMNS.at(i),
+                           qSqlQuery.value(i));
+  }
+
+  return qVariantMap_Row;
 }
