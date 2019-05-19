@@ -1,13 +1,14 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-// Project includes
+// Project includes ---------------------------------------
 #include "Exception.h"
 #include "Settings/Settings.h"
 #include "CSVImporter/CSVImporterDialog.h"
 #include "Database/DatabaseManager.h"
 #include "Database/DatabaseTableEnergia.h"
 #include "DocumentProperties/DocumentPropertiesDialog.h"
+#include "EnergyCalculator/EnergyCalculator.h"
 
 // Qt includes --------------------------------------------
 #include <QFileDialog>
@@ -21,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
   , ui(new Ui::MainWindow)
   , m_Settings(nullptr)
   , m_DatabaseManager(nullptr)
+  , m_EnergyCalculator(nullptr)
 {
   ui->setupUi(this);
 
@@ -32,6 +34,48 @@ MainWindow::MainWindow(QWidget *parent)
 
   // Database manager
   m_DatabaseManager = new DatabaseManager(this);
+
+  // EnergyCalculator
+  {
+    EnergyCalculator::Configuration configuration;
+    configuration.m_EnergyProductionEntity = EnergyCalculator::EnergyProductionEntity("Solare",
+                                                                                      DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L1,
+                                                                                      DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L2,
+                                                                                      DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_SOLARE_L3);
+    configuration.m_QList_EnergyConsumptionEntity << EnergyCalculator::EnergyConsumptionEntity("Casa 15 Appartamento 1",
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO1_L1,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO1_L2,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO1_L3,
+                                                                                               2)
+                                                  << EnergyCalculator::EnergyConsumptionEntity("Casa 15 Appartamento 2",
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO2_L1,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO2_L2,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO2_L3,
+                                                                                               2)
+                                                  << EnergyCalculator::EnergyConsumptionEntity("Casa 15 Appartamento 3",
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO3_L1,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO3_L2,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA15_APPARTAMENTO3_L3,
+                                                                                               2)
+                                                  << EnergyCalculator::EnergyConsumptionEntity("Casa 17 Appartamento 1",
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO1_L1,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO1_L2,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO1_L3,
+                                                                                               1)
+                                                  << EnergyCalculator::EnergyConsumptionEntity("Casa 17 Appartamento 2",
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO2_L1,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO2_L2,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO2_L3,
+                                                                                               1)
+                                                  << EnergyCalculator::EnergyConsumptionEntity("Casa 17 Appartamento 3",
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L1,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L2,
+                                                                                               DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_CASA17_APPARTAMENTO3_L3,
+                                                                                               2);
+
+    m_EnergyCalculator = new EnergyCalculator(configuration,
+                                              this);
+  }
 
   // Load last document
   if(m_Settings->get_CurrentDocument().isEmpty() == false)
@@ -59,9 +103,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-  delete m_Settings;
+  delete m_EnergyCalculator;
 
   delete m_DatabaseManager;
+
+  delete m_Settings;
 
   delete ui;
 }
@@ -191,7 +237,7 @@ void MainWindow::updateGui()
   }
 
   // Compute energy
-
+  EnergyCalculator::Result result = m_EnergyCalculator->DistributeEnergy(qList_QVariantMap_Rows);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------

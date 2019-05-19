@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DocumentProperties/DocumentPropertiesDialog.cpp \
+    EnergyCalculator/EnergyCalculator.cpp \
     Settings/Settings.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -36,6 +37,7 @@ SOURCES += \
 
 HEADERS += \
     DocumentProperties/DocumentPropertiesDialog.h \
+    EnergyCalculator/EnergyCalculator.h \
     MainWindow.h \
     Exception.h \
     Database/DatabaseManager.h \

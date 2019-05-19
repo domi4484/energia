@@ -6,8 +6,9 @@
 
 // Class forward declarations -----------------------------
 namespace Ui { class MainWindow; }
-class DatabaseManager;
 class Settings;
+class DatabaseManager;
+class EnergyCalculator;
 
 class MainWindow : public QMainWindow
 {
@@ -37,6 +38,9 @@ private:
 
   // DatabaseManager
   DatabaseManager *m_DatabaseManager;
+
+  // EnergyCalculator
+  EnergyCalculator *m_EnergyCalculator;
 
   void updateGui();
   void updateWindowTitle(const QString &filename);
