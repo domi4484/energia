@@ -3,6 +3,7 @@
 
 // Qt includes --------------------------------------------
 #include <QObject>
+#include <QMap>
 
 class EnergyCalculator : public QObject
 {
@@ -52,10 +53,10 @@ public:
     {}
 
     EnergyConsumptionEntity(const QString &name,
-                                     const QString &keyL1,
-                                     const QString &keyL2,
-                                     const QString &keyL3,
-                                     int priority)
+                            const QString &keyL1,
+                            const QString &keyL2,
+                            const QString &keyL3,
+                            int priority)
       : m_Name(name)
       , m_KeyL1(keyL1)
       , m_KeyL2(keyL2)
@@ -96,9 +97,17 @@ public:
     {
     public:
 
+      QString m_Name;
+
       class L1
       {
       public:
+
+        L1()
+          : m_Production(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Production;
         double m_SelfConsumption;
       }; // L1
@@ -108,6 +117,12 @@ public:
       class L2
       {
       public:
+
+        L2()
+          : m_Production(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Production;
         double m_SelfConsumption;
       }; // L2
@@ -117,6 +132,12 @@ public:
       class L3
       {
       public:
+
+        L3()
+          : m_Production(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Production;
         double m_SelfConsumption;
       }; // L3
@@ -126,6 +147,12 @@ public:
       class Total
       {
       public:
+
+        Total()
+          : m_Production(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Production;
         double m_SelfConsumption;
       }; // Total
@@ -140,9 +167,17 @@ public:
     {
     public:
 
+      QString m_Name;
+
       class L1
       {
       public:
+
+        L1()
+          : m_Consumption(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Consumption;
         double m_SelfConsumption;
       }; // L1
@@ -152,6 +187,12 @@ public:
       class L2
       {
       public:
+
+        L2()
+          : m_Consumption(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Consumption;
         double m_SelfConsumption;
       }; // L2
@@ -161,6 +202,12 @@ public:
       class L3
       {
       public:
+
+        L3()
+          : m_Consumption(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Consumption;
         double m_SelfConsumption;
       }; // L3
@@ -170,6 +217,12 @@ public:
       class Total
       {
       public:
+
+        Total()
+          : m_Consumption(0.0)
+          , m_SelfConsumption(0.0)
+        {}
+
         double m_Consumption;
         double m_SelfConsumption;
       }; // Total
@@ -178,7 +231,7 @@ public:
 
     }; // EnergyConsumptionEntity
 
-    QList<EnergyConsumptionEntity> m_QList_EnergyConsumptionEntity;
+    QMap<QString, EnergyConsumptionEntity> m_QMap_EnergyConsumptionEntity;
 
   }; // Result
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>885</width>
-    <height>625</height>
+    <width>1230</width>
+    <height>778</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -75,6 +75,27 @@
         <attribute name="title">
          <string>Data</string>
         </attribute>
+        <layout class="QGridLayout" name="gridLayout_5">
+         <item row="0" column="0">
+          <widget class="QTreeWidget" name="m_QTreeWidget_Data">
+           <column>
+            <property name="text">
+             <string>Entity</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Production/Consumption</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Self consumption</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
        </widget>
        <widget class="QWidget" name="Chart">
         <attribute name="title">
@@ -100,8 +121,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>885</width>
-     <height>23</height>
+     <width>1230</width>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
