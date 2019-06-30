@@ -9,6 +9,7 @@
 
 // Qt includes --------------------------------------------
 #include <QDate>
+#include <QDebug>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QVariantMap>
@@ -151,13 +152,10 @@ QVariantMap DatabaseTableEnergia::GetOldestRow() const
     throw Exception(QString("Can't get database rows; %1").arg(qSqlQuery.lastError().text()));
 
   qSqlQuery.first();
-
   QVariantMap qVariantMap_Row;
-  for (int i=0; i < _CONST::DATABASE_TABLE::ALL_COLUMNS.size(); i++)
-  {
-    qVariantMap_Row.insert(_CONST::DATABASE_TABLE::ALL_COLUMNS.at(i),
-                           qSqlQuery.value(i));
-  }
+  foreach (const QString &column, _CONST::DATABASE_TABLE::ALL_COLUMNS)
+    qVariantMap_Row.insert(column,
+                           qSqlQuery.value(column));
 
   return qVariantMap_Row;
 }
@@ -177,13 +175,10 @@ QVariantMap DatabaseTableEnergia::GetNewestRow() const
     throw Exception(QString("Can't get database rows; %1").arg(qSqlQuery.lastError().text()));
 
   qSqlQuery.first();
-
   QVariantMap qVariantMap_Row;
-  for (int i=0; i < _CONST::DATABASE_TABLE::ALL_COLUMNS.size(); i++)
-  {
-    qVariantMap_Row.insert(_CONST::DATABASE_TABLE::ALL_COLUMNS.at(i),
-                           qSqlQuery.value(i));
-  }
+  foreach (const QString &column, _CONST::DATABASE_TABLE::ALL_COLUMNS)
+    qVariantMap_Row.insert(column,
+                           qSqlQuery.value(column));
 
   return qVariantMap_Row;
 }

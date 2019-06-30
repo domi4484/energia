@@ -7,6 +7,9 @@
 #include "../Database/DatabaseManager.h"
 #include "../Database/DatabaseTableEnergia.h"
 
+// Qt includes --------------------------------------------
+#include <QDebug>
+
 //-----------------------------------------------------------------------------------------------------------------------------
 
 DocumentPropertiesDialog::DocumentPropertiesDialog(DatabaseManager *databaseManager,
@@ -49,6 +52,6 @@ void DocumentPropertiesDialog::setupGui_Content()
 {
   ui->m_QLabel_Content_TotalDatabaseRows->setText(QString::number(m_DatabaseManager->GetTableEnergia()->GetRowCount()));
 
-  ui->m_QLabel_FirstEntryDateTime->setText((m_DatabaseManager->GetTableEnergia()->GetOldestRow().value(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP).toString()));
-  ui->m_QLabel_LastEntryDateTime->setText((m_DatabaseManager->GetTableEnergia()->GetNewestRow().value(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP).toString()));
+  ui->m_QLabel_FirstEntryDateTime->setText(m_DatabaseManager->GetTableEnergia()->GetOldestRow().value(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP).toString());
+  ui->m_QLabel_LastEntryDateTime->setText(m_DatabaseManager->GetTableEnergia()->GetNewestRow().value(DatabaseTableEnergia::_CONST::DATABASE_TABLE::COLUMN_NAME_TIMESTAMP).toString());
 }
