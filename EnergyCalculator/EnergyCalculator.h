@@ -64,6 +64,11 @@ public:
       , m_Priority(priority)
     {}
 
+    bool operator ==(const EnergyConsumptionEntity &other)
+    {
+      return m_Name == other.m_Name;
+    }
+
     QString m_Name;
 
     QString m_KeyL1;

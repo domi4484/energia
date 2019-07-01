@@ -68,7 +68,8 @@ EnergyCalculator::Result EnergyCalculator::DistributeEnergy(const QList<QVariant
                                                                                                     + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L2.m_Consumption
                                                                                                     + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L3.m_Consumption;
     }
-  }
+
+  } // Production/consumption
 
   // Self consumption
   {
@@ -104,22 +105,177 @@ EnergyCalculator::Result EnergyCalculator::DistributeEnergy(const QList<QVariant
       double L2_Production = qVariantMap.value(m_Configuration.m_EnergyProductionEntity.m_KeyL2).toDouble();
       double L3_Production = qVariantMap.value(m_Configuration.m_EnergyProductionEntity.m_KeyL3).toDouble();
 
+      if(   L1_Production == 0.0
+         && L2_Production == 0.0
+         && L3_Production == 0.0)
+        continue;
+
       // For each group ordered by priority
       foreach (const QList<EnergyConsumptionEntity> & qList_EnergyConsumptionGroup, qList_EnergyConsumptionGroups)
       {
-//        foreach(const EnergyConsumptionEntity &energyConsumptionEntity, priorityGroups)
-//        {
-//          result.m_QMap_EnergyConsumptionEntity[energyConsumptionEntity.m_Name].m_L1.m_Consumption += qVariantMap.value(energyConsumptionEntity.m_KeyL1).toDouble();
-//          result.m_QMap_EnergyConsumptionEntity[energyConsumptionEntity.m_Name].m_L2.m_Consumption += qVariantMap.value(energyConsumptionEntity.m_KeyL2).toDouble();
-//          result.m_QMap_EnergyConsumptionEntity[energyConsumptionEntity.m_Name].m_L3.m_Consumption += qVariantMap.value(energyConsumptionEntity.m_KeyL3).toDouble();
-//          result.m_QMap_EnergyConsumptionEntity[energyConsumptionEntity.m_Name].m_Total.m_Consumption = result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_Total.m_Consumption
-//              + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L1.m_Consumption
-//              + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L2.m_Consumption
-//              + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L3.m_Consumption;
-//        }
+        // L1
+        {
+          QMap<QString, double> qMap_Entity_SelfConsumption;
+          QList<EnergyConsumptionEntity> qList_EnegyConsumptionGroupNotDone;
+          foreach (const EnergyConsumptionEntity &energyConsumptionEntity, qList_EnergyConsumptionGroup)
+            qList_EnegyConsumptionGroupNotDone.append(energyConsumptionEntity);
+
+          double productionToDistribute = L1_Production;
+          while(true)
+          {
+            double partPerEntity = productionToDistribute / (double)qList_EnegyConsumptionGroupNotDone.size();
+            double effectivelyDistributed = 0.0;
+
+            foreach (const EnergyConsumptionEntity &energyConsumptionEntity, qList_EnegyConsumptionGroupNotDone)
+            {
+              effectivelyDistributed = qMin(partPerEntity,
+                                              qVariantMap.value(energyConsumptionEntity.m_KeyL1).toDouble()
+                                            - qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0));
+
+              qMap_Entity_SelfConsumption.insert(energyConsumptionEntity.m_Name,
+                                                 (qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0)
+                                                  + effectivelyDistributed));
+
+              if( (qVariantMap.value(energyConsumptionEntity.m_KeyL1).toDouble()
+                  - qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0))
+                 <= 0.0)
+                qList_EnegyConsumptionGroupNotDone.removeOne(energyConsumptionEntity);
+
+            } // foreach entity
+
+            productionToDistribute -= effectivelyDistributed;
+            L1_Production -= effectivelyDistributed;
+
+            if(qList_EnegyConsumptionGroupNotDone.isEmpty())
+              break;
+
+            if(productionToDistribute < 0.00001)
+              break;
+
+          } // while
+
+          foreach(const QString &entityName, qMap_Entity_SelfConsumption.keys())
+          {
+            result.m_QMap_EnergyConsumptionEntity[entityName].m_L1.m_SelfConsumption += qMap_Entity_SelfConsumption.value(entityName);
+            result.m_EnergyProductionEntity.m_L1.m_SelfConsumption += qMap_Entity_SelfConsumption.value(entityName);
+          }
+
+        } // L1
+
+        // L2
+        {
+          QMap<QString, double> qMap_Entity_SelfConsumption;
+          QList<EnergyConsumptionEntity> qList_EnegyConsumptionGroupNotDone;
+          foreach (const EnergyConsumptionEntity &energyConsumptionEntity, qList_EnergyConsumptionGroup)
+            qList_EnegyConsumptionGroupNotDone.append(energyConsumptionEntity);
+
+          double productionToDistribute = L2_Production;
+          while(true)
+          {
+            double partPerEntity = productionToDistribute / (double)qList_EnegyConsumptionGroupNotDone.size();
+            double effectivelyDistributed = 0.0;
+
+            foreach (const EnergyConsumptionEntity &energyConsumptionEntity, qList_EnegyConsumptionGroupNotDone)
+            {
+              effectivelyDistributed = qMin(partPerEntity,
+                                              qVariantMap.value(energyConsumptionEntity.m_KeyL2).toDouble()
+                                            - qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0));
+
+              qMap_Entity_SelfConsumption.insert(energyConsumptionEntity.m_Name,
+                                                 (qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0)
+                                                  + effectivelyDistributed));
+
+              if( (qVariantMap.value(energyConsumptionEntity.m_KeyL2).toDouble()
+                  - qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0))
+                 <= 0.0)
+                qList_EnegyConsumptionGroupNotDone.removeOne(energyConsumptionEntity);
+
+            } // foreach entity
+
+            productionToDistribute -= effectivelyDistributed;
+            L2_Production -= effectivelyDistributed;
+
+            if(qList_EnegyConsumptionGroupNotDone.isEmpty())
+              break;
+
+            if(productionToDistribute < 0.00001)
+              break;
+
+          } // while
+
+          foreach(const QString &entityName, qMap_Entity_SelfConsumption.keys())
+          {
+            result.m_QMap_EnergyConsumptionEntity[entityName].m_L2.m_SelfConsumption += qMap_Entity_SelfConsumption.value(entityName);
+            result.m_EnergyProductionEntity.m_L2.m_SelfConsumption += qMap_Entity_SelfConsumption.value(entityName);
+          }
+
+        } // L2
+
+        // L3
+        {
+          QMap<QString, double> qMap_Entity_SelfConsumption;
+          QList<EnergyConsumptionEntity> qList_EnegyConsumptionGroupNotDone;
+          foreach (const EnergyConsumptionEntity &energyConsumptionEntity, qList_EnergyConsumptionGroup)
+            qList_EnegyConsumptionGroupNotDone.append(energyConsumptionEntity);
+
+          double productionToDistribute = L3_Production;
+          while(true)
+          {
+            double partPerEntity = productionToDistribute / (double)qList_EnegyConsumptionGroupNotDone.size();
+            double effectivelyDistributed = 0.0;
+
+            foreach (const EnergyConsumptionEntity &energyConsumptionEntity, qList_EnegyConsumptionGroupNotDone)
+            {
+              effectivelyDistributed = qMin(partPerEntity,
+                                              qVariantMap.value(energyConsumptionEntity.m_KeyL3).toDouble()
+                                            - qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0));
+
+              qMap_Entity_SelfConsumption.insert(energyConsumptionEntity.m_Name,
+                                                 (qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0)
+                                                  + effectivelyDistributed));
+
+              if( (qVariantMap.value(energyConsumptionEntity.m_KeyL3).toDouble()
+                  - qMap_Entity_SelfConsumption.value(energyConsumptionEntity.m_Name, 0.0))
+                 <= 0.0)
+                qList_EnegyConsumptionGroupNotDone.removeOne(energyConsumptionEntity);
+
+            } // foreach entity
+
+            productionToDistribute -= effectivelyDistributed;
+            L3_Production -= effectivelyDistributed;
+
+            if(qList_EnegyConsumptionGroupNotDone.isEmpty())
+              break;
+
+            if(productionToDistribute < 0.00001)
+              break;
+
+          } // while
+
+          foreach(const QString &entityName, qMap_Entity_SelfConsumption.keys())
+          {
+            result.m_QMap_EnergyConsumptionEntity[entityName].m_L3.m_SelfConsumption += qMap_Entity_SelfConsumption.value(entityName);
+            result.m_EnergyProductionEntity.m_L3.m_SelfConsumption += qMap_Entity_SelfConsumption.value(entityName);
+          }
+
+        } // L3
+
       } // foreach qList_EnergyConsumptionGroup
     } // foreach row
-  }
+
+    // Totals
+    {
+      result.m_EnergyProductionEntity.m_Total.m_SelfConsumption = result.m_EnergyProductionEntity.m_L1.m_SelfConsumption
+                                                                + result.m_EnergyProductionEntity.m_L2.m_SelfConsumption
+                                                                + result.m_EnergyProductionEntity.m_L3.m_SelfConsumption;
+
+      foreach(const EnergyConsumptionEntity &energyConsumptionEntity, m_Configuration.m_QList_EnergyConsumptionEntity)
+        result.m_QMap_EnergyConsumptionEntity[energyConsumptionEntity.m_Name].m_Total.m_SelfConsumption = result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L1.m_SelfConsumption
+                                                                                                        + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L2.m_SelfConsumption
+                                                                                                        + result.m_QMap_EnergyConsumptionEntity.value(energyConsumptionEntity.m_Name).m_L3.m_SelfConsumption;
+    }
+
+  } // Self consumption
 
   return result;
 }

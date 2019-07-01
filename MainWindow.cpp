@@ -291,6 +291,8 @@ void MainWindow::updateGui()
     ui->m_QTreeWidget_Data->addTopLevelItem(qTreeWidgetItem);
   }
 
+  ui->m_QTreeWidget_Data->expandAll();
+
   ui->m_QTreeWidget_Data->resizeColumnToContents(0);
   ui->m_QTreeWidget_Data->resizeColumnToContents(1);
   ui->m_QTreeWidget_Data->resizeColumnToContents(2);
