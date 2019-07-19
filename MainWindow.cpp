@@ -245,53 +245,66 @@ void MainWindow::updateGui()
   // Production
   {
     QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(QStringList() << result.m_EnergyProductionEntity.m_Name);
+    ui->m_QTreeWidget_Data->addTopLevelItem(qTreeWidgetItem);
+    qTreeWidgetItem->setExpanded(true);
 
     QTreeWidgetItem *qTreeWidgetItemTotal = new QTreeWidgetItem(QStringList() << "Total"
                                                                               << QString::number(result.m_EnergyProductionEntity.m_Total.m_Production)
                                                                               << QString::number(result.m_EnergyProductionEntity.m_Total.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemTotal);
-    QTreeWidgetItem *qTreeWidgetItemL1 = new QTreeWidgetItem(QStringList() << "L1"
-                                                                           << QString::number(result.m_EnergyProductionEntity.m_L1.m_Production)
-                                                                           << QString::number(result.m_EnergyProductionEntity.m_L1.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemL1);
-    QTreeWidgetItem *qTreeWidgetItemL2 = new QTreeWidgetItem(QStringList() << "L2"
-                                                                           << QString::number(result.m_EnergyProductionEntity.m_L2.m_Production)
-                                                                           << QString::number(result.m_EnergyProductionEntity.m_L2.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemL2);
-    QTreeWidgetItem *qTreeWidgetItemL3 = new QTreeWidgetItem(QStringList() << "L3"
-                                                                           << QString::number(result.m_EnergyProductionEntity.m_L3.m_Production)
-                                                                           << QString::number(result.m_EnergyProductionEntity.m_L3.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemL3);
 
-    ui->m_QTreeWidget_Data->addTopLevelItem(qTreeWidgetItem);
-  }
+    qTreeWidgetItem->addChild(qTreeWidgetItemTotal);
+
+    // Phases
+    {
+      QTreeWidgetItem *qTreeWidgetItemPhases = new QTreeWidgetItem(QStringList() << "Phases");
+      QTreeWidgetItem *qTreeWidgetItemL1 = new QTreeWidgetItem(QStringList() << "L1"
+                                                                             << QString::number(result.m_EnergyProductionEntity.m_L1.m_Production)
+                                                                             << QString::number(result.m_EnergyProductionEntity.m_L1.m_SelfConsumption));
+      qTreeWidgetItemPhases->addChild(qTreeWidgetItemL1);
+      QTreeWidgetItem *qTreeWidgetItemL2 = new QTreeWidgetItem(QStringList() << "L2"
+                                                                             << QString::number(result.m_EnergyProductionEntity.m_L2.m_Production)
+                                                                             << QString::number(result.m_EnergyProductionEntity.m_L2.m_SelfConsumption));
+      qTreeWidgetItemPhases->addChild(qTreeWidgetItemL2);
+      QTreeWidgetItem *qTreeWidgetItemL3 = new QTreeWidgetItem(QStringList() << "L3"
+                                                                             << QString::number(result.m_EnergyProductionEntity.m_L3.m_Production)
+                                                                             << QString::number(result.m_EnergyProductionEntity.m_L3.m_SelfConsumption));
+      qTreeWidgetItemPhases->addChild(qTreeWidgetItemL3);
+
+      qTreeWidgetItem->addChild(qTreeWidgetItemPhases);
+    } // Phases
+  } // Production
 
   // Consumption
   foreach (const EnergyCalculator::Result::EnergyConsumptionEntity &energyConsumptionEntity, result.m_QMap_EnergyConsumptionEntity.values())
   {
     QTreeWidgetItem *qTreeWidgetItem = new QTreeWidgetItem(QStringList() << energyConsumptionEntity.m_Name);
+    ui->m_QTreeWidget_Data->addTopLevelItem(qTreeWidgetItem);
+    qTreeWidgetItem->setExpanded(true);
 
     QTreeWidgetItem *qTreeWidgetItemTotal = new QTreeWidgetItem(QStringList() << "Total"
                                                                               << QString::number(energyConsumptionEntity.m_Total.m_Consumption)
                                                                               << QString::number(energyConsumptionEntity.m_Total.m_SelfConsumption));
     qTreeWidgetItem->addChild(qTreeWidgetItemTotal);
-    QTreeWidgetItem *qTreeWidgetItemL1 = new QTreeWidgetItem(QStringList() << "L1"
-                                                                           << QString::number(energyConsumptionEntity.m_L1.m_Consumption)
-                                                                           << QString::number(energyConsumptionEntity.m_L1.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemL1);
-    QTreeWidgetItem *qTreeWidgetItemL2 = new QTreeWidgetItem(QStringList() << "L2"
-                                                                           << QString::number(energyConsumptionEntity.m_L2.m_Consumption)
-                                                                           << QString::number(energyConsumptionEntity.m_L2.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemL2);
-    QTreeWidgetItem *qTreeWidgetItemL3 = new QTreeWidgetItem(QStringList() << "L3"
-                                                                           << QString::number(energyConsumptionEntity.m_L3.m_Consumption)
-                                                                           << QString::number(energyConsumptionEntity.m_L3.m_SelfConsumption));
-    qTreeWidgetItem->addChild(qTreeWidgetItemL3);
 
-    ui->m_QTreeWidget_Data->addTopLevelItem(qTreeWidgetItem);
-  }
+    // Phases
+    {
+      QTreeWidgetItem *qTreeWidgetItemPhases = new QTreeWidgetItem(QStringList() << "Phases");
+      QTreeWidgetItem *qTreeWidgetItemL1 = new QTreeWidgetItem(QStringList() << "L1"
+                                                                             << QString::number(energyConsumptionEntity.m_L1.m_Consumption)
+                                                                             << QString::number(energyConsumptionEntity.m_L1.m_SelfConsumption));
+      qTreeWidgetItemPhases->addChild(qTreeWidgetItemL1);
+      QTreeWidgetItem *qTreeWidgetItemL2 = new QTreeWidgetItem(QStringList() << "L2"
+                                                                             << QString::number(energyConsumptionEntity.m_L2.m_Consumption)
+                                                                             << QString::number(energyConsumptionEntity.m_L2.m_SelfConsumption));
+      qTreeWidgetItemPhases->addChild(qTreeWidgetItemL2);
+      QTreeWidgetItem *qTreeWidgetItemL3 = new QTreeWidgetItem(QStringList() << "L3"
+                                                                             << QString::number(energyConsumptionEntity.m_L3.m_Consumption)
+                                                                             << QString::number(energyConsumptionEntity.m_L3.m_SelfConsumption));
+      qTreeWidgetItemPhases->addChild(qTreeWidgetItemL3);
 
-  ui->m_QTreeWidget_Data->expandAll();
+      qTreeWidgetItem->addChild(qTreeWidgetItemPhases);
+    } // Phases
+  } // foreach
 
   ui->m_QTreeWidget_Data->resizeColumnToContents(0);
   ui->m_QTreeWidget_Data->resizeColumnToContents(1);
