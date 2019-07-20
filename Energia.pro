@@ -8,7 +8,7 @@ QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = Corrente
+TARGET = EnergiaCalculator
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -24,29 +24,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    DocumentProperties/DocumentPropertiesDialog.cpp \
-    EnergyCalculator/EnergyCalculator.cpp \
-    Settings/Settings.cpp \
     main.cpp \
     MainWindow.cpp \
     Exception.cpp \
-    Database/DatabaseManager.cpp \
     CSVImporter/CSVImporterDialog.cpp \
     CSVImporter/CSVImporterSettings.cpp \
-    Database/DatabaseTableEnergia.cpp
+    Database/DatabaseManager.cpp \
+    Database/DatabaseTableEnergia.cpp \
+    DocumentProperties/DocumentPropertiesDialog.cpp \
+    EnergyCalculator/EnergyCalculator.cpp \
+    Settings/Settings.cpp
 
 HEADERS += \
-    DocumentProperties/DocumentPropertiesDialog.h \
-    EnergyCalculator/EnergyCalculator.h \
     MainWindow.h \
     Exception.h \
-    Database/DatabaseManager.h \
     CSVImporter/CSVImporterDialog.h \
     CSVImporter/CSVImporterSettings.h \
+    Database/DatabaseManager.h \
     Database/DatabaseTableEnergia.h \
+    DocumentProperties/DocumentPropertiesDialog.h \
+    EnergyCalculator/EnergyCalculator.h \
     Settings/Settings.h
 
 FORMS += \
-    DocumentProperties/DocumentPropertiesDialog.ui \
     MainWindow.ui \
-    CSVImporter/CSVImporterDialog.ui
+    CSVImporter/CSVImporterDialog.ui \
+    DocumentProperties/DocumentPropertiesDialog.ui
